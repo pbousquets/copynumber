@@ -1,10 +1,10 @@
   
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut Liestï¿½l and Ole Christian Lingjï¿½rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and Liestï¿½l et al. (2012), BMC Genomics
 ####################################################################
 
 
@@ -22,7 +22,7 @@
 
 #Main function for allele-specific PCF to be called by user
 
-aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0.1,0.9),skew=3,assembly="hg19",digits=4,return.est=FALSE,save.res=FALSE,file.names=NULL,verbose=TRUE){
+aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0.1,0.9),skew=3,assembly="hg19",cytoband_file=NULL,digits=4,return.est=FALSE,save.res=FALSE,file.names=NULL,verbose=TRUE){
 
   #Check pos.unit input:
   if(!pos.unit %in% c("bp","kbp","mbp")){
@@ -30,9 +30,9 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   }
   
   #Check assembly input:
-  if(!assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
-    stop("assembly must be one of hg19, hg18, hg17 or hg16",call.=FALSE)
-  }
+  if(!file.exists(cytoband_file) && !assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+    stop("assembly or cytoband file must be provided ( Warning : assembly only works for hg19, hg18, hg17 or hg16 and mm7, mm8, mm9, please provide cytoband for other build/species)",call.=FALSE)
+  }  
   
   #Check if logR and BAF are files:
   isfile.logR <- class(logR)=="character"
@@ -80,10 +80,24 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   
   #Get character arms:
 	if(is.null(arms)){
-    arms <- getArms(num.chrom,position,pos.unit,get(assembly))
+	  # convert assembly to index 
+	  if(!file.exists(cytoband_file)){
+	    tmpassembly<-get(assembly)
+	  }else{
+	  	tmpassembly<-read.table(cytoband_file,sep="\t",comment.char = "#",header = FALSE)
+	  }
+	  names(tmpassembly)<-c("chrom","chromStart","chromEnd","name","gieStain")
+	  #restrict assembly to chromosomes in the data frame
+	  tmpassembly<-tmpassembly[tmpassembly$chrom %in% c(keys(tmpChrHash)), ]
+	  tmpassembly<-droplevels(tmpassembly)
+	  for (key in keys(tmpChrHash)) {
+     levels(tmpassembly$chrom)[levels(tmpassembly$chrom) == key ] <- tmpChrHash[[key]]
+    } 
+    arms <- getArms(num.chrom,position,pos.unit,tmpassembly)
 	}else{
     stopifnot(length(arms)==nProbe)
 	}
+
 	#Translate to numeric arms:
 	num.arms <- numericArms(num.chrom,arms)
 	#Unique arms:
