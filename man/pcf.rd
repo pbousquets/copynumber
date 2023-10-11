@@ -6,7 +6,7 @@
 }
 \usage{
 pcf(data, pos.unit = "bp", arms = NULL, Y = NULL, kmin = 5, gamma = 40,
-      normalize = TRUE, fast = TRUE, assembly = "hg19", digits = 4,
+      normalize = TRUE, fast = TRUE, assembly = "hg19", cytoband_file=NULL, digits = 4,
       return.est = FALSE, save.res = FALSE, file.names = NULL, verbose = TRUE)
 }
 
@@ -20,6 +20,7 @@ pcf(data, pos.unit = "bp", arms = NULL, Y = NULL, kmin = 5, gamma = 40,
   \item{normalize}{logical value indicating whether the copy number measurements should be scaled by the sample residual standard error. Default is TRUE.}
   \item{fast}{a logical value indicating whether a fast (not guaranteed to be exact) version should be run on chromosome arms with > 400 probes.}
   \item{assembly}{a string specifying which genome assembly version should be applied to determine chromosome arms. Allowed options are "hg19", "hg18", "hg17" and "hg16" (corresponding to the four latest human genome annotations in the UCSC genome browser).}
+  \item{cytoband_file}{a string specifying the path to a custom cytoband file from UCSC, in case the the assembly argument doesn't contain the reference genome used in the analysis.}
   \item{digits}{the number of decimals to be applied when reporting results. Default is 4.}
   \item{return.est}{logical value indicating whether a data frame holding copy number estimates (pcf values) should be returned along with the segments. Default is FALSE, which means that only segments are returned.}
   \item{save.res}{logical value indicating whether results should be saved in text files.}

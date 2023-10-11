@@ -6,7 +6,7 @@
 }
 \usage{
 aspcf(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
-      baf.thres=c(0.1,0.9), skew = 3, assembly= "hg19", digits = 4, 
+      baf.thres=c(0.1,0.9), skew = 3, assembly= "hg19", cytoband_file=NULL, digits = 4, 
       return.est = FALSE, save.res = FALSE, file.names=NULL, verbose = TRUE)
 }
 \arguments{
@@ -19,6 +19,7 @@ aspcf(logR, BAF, pos.unit = "bp", arms = NULL, kmin = 5, gamma = 40,
   \item{baf.thres}{a numeric vector of length two giving the thresholds below and above which BAF probes are considered germline homozygous. Must be in the range 0 to 1, default is 0.1 and 0.9 for the lower and upper limit, respectively.}
   \item{skew}{a numeric value used to determine whether there is allelic skewness (one or two bands) in BAF. Default is 3. The larger the value the further the BAF measurements must be from 0.5 to imply two bands.}
   \item{assembly}{a string specifying which genome assembly version should be applied to determine chromosome arms. Allowed options are "hg19", "hg18", "hg17" and "hg16" (corresponding to the four latest human genome annotations in the UCSC genome browser).}
+  \item{cytoband_file}{a string specifying the path to a custom cytoband file from UCSC, in case the the assembly argument doesn't contain the reference genome used in the analysis.}
   \item{digits}{the number of decimals to be applied when reporting results. Default is 4.}
   \item{return.est}{logical value indicating whether a data frame holding LogR estimates should be returned along with the segments. Default is FALSE, which means that only segments are returned.}
   \item{save.res}{logical value indicating whether results should be saved in text files, default is FALSE.}

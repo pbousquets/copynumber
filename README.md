@@ -1,12 +1,11 @@
-Copynumber with species agnostic pcf
+Copynumber with species agnostic pcf and aspcf
 ====================================
 This repository is forked from:
 https://github.com/Bioconductor-mirror/copynumber
 
-I have made changes to pcf.r function to make it species/build agnostic in following feature branch
-https://github.com/sb43/copynumber/tree/feature/species_agnostic
+And inherits changes carried out in https://github.com/sb43/copynumber/tree/feature/species_agnostic and https://github.com/Irrationone/copynumber. 
 
-pcf function now accepts user supplied cytoband file.
+pcf and aspcf function now accepts user supplied cytoband file.
 
 All the chromosomes are now referred by its index values.
 
