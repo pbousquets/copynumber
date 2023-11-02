@@ -83,7 +83,7 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   #Get character arms:
 	if(is.null(arms)){
 	  # convert assembly to index 
-	  if(!file.exists(cytoband_file)){
+	  if(is.null(cytoband_file)){
 	    tmpassembly<-get(assembly)
 	  }else{
 	  	tmpassembly<-read.table(cytoband_file,sep="\t",comment.char = "#",header = FALSE)
