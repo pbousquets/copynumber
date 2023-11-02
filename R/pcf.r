@@ -51,7 +51,7 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
     data <- pullOutContent(data,what="wins.data")
     stopifnot(ncol(data)>=3)  #something is missing in input data
     #convert chromsomes to index -sb43######################
-    tmpChr <- levels(data$chr) 
+    tmpChr <- levels(as.factor(data$chr)) 
     tmpChrHash<-hash(tmpChr,1:length(tmpChr))
     # convert data frame to 
     for (key in keys(tmpChrHash)) {
