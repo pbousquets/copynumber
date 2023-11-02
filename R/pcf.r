@@ -1,10 +1,10 @@
 
 ####################################################################
-## Author: Gro Nilsen, Knut Liestøl and Ole Christian Lingjærde.
+## Author: Gro Nilsen, Knut Liestï¿½l and Ole Christian Lingjï¿½rde.
 ## Maintainer: Gro Nilsen <gronilse@ifi.uio.no>
 ## License: Artistic 2.0
 ## Part of the copynumber package
-## Reference: Nilsen and Liestøl et al. (2012), BMC Genomics
+## Reference: Nilsen and Liestï¿½l et al. (2012), BMC Genomics
 ####################################################################
 
 
@@ -34,9 +34,14 @@ pcf <- function(data,pos.unit="bp",arms=NULL,Y=NULL,kmin=5,gamma=40,normalize=TR
   }
 
   #Check assembly input:
-  if(!file.exists(cytoband_file) && !assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+  if(!is.null(cytoband_file) && !assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
     stop("assembly or cytoband file must be provided ( Warning : assembly only works for hg19, hg18, hg17 or hg16 and mm7, mm8, mm9, please provide cytoband for other build/species)",call.=FALSE)
   }  
+
+  if (!is.null(cytoband_file)) {
+	stopifnot(file.exists(cytoband_file))
+  }
+  
   #Is data a file:
   isfile.data <- class(data)=="character"
   

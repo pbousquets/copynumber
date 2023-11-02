@@ -30,10 +30,12 @@ aspcf <- function(logR,BAF,pos.unit="bp",arms=NULL,kmin=5,gamma=40,baf.thres=c(0
   }
   
   #Check assembly input:
-  if(!file.exists(cytoband_file) && !assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
+  if(!is.null(cytoband_file) && !assembly %in% c("hg19","hg18","hg17","hg16","mm7","mm8","mm9")){
     stop("assembly or cytoband file must be provided ( Warning : assembly only works for hg19, hg18, hg17 or hg16 and mm7, mm8, mm9, please provide cytoband for other build/species)",call.=FALSE)
   }  
-  
+    if (!is.null(cytoband_file)) {
+	stopifnot(file.exists(cytoband_file))
+  }
   #Check if logR and BAF are files:
   isfile.logR <- class(logR)=="character"
   isfile.BAF <- class(BAF)=="character"
